@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Projects</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #00ffcc;
+            --bg-color: rgb(1, 1, 30);
+            --text-color: white;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(0, 255, 204, 0.1);
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: rgb(1, 1, 30);
+            color: white;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        #background-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -999;
+        }
+           
+        /* NEW NAVBAR STYLES */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(1, 1, 30, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 255, 204, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item {
+            margin: 0 15px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-link i {
+            color: var(--primary-color);
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-link:hover i {
+            transform: translateY(-2px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 24px;
+        }
+
+        .hamburger i {
+            color: var(--primary-color);
+        }
+
+        /* Mobile sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 250px;
+            height: 100vh;
+            background-color: rgba(1, 1, 30, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 9999;
+            padding-top: 70px;
+            transition: right 0.3s ease;
+            border-left: 1px solid var(--card-border);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0 20px;
+        }
+
+        .sidebar-item {
+            margin: 20px 0;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-link:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--primary-color);
+        }
+
+        .sidebar-link i {
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+
+        .sidebar-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-close:hover {
+            color: var(--primary-color);
+            transform: rotate(90deg);
+        }
+
+        @media screen and (max-width: 992px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .nav-container {
+                padding: 15px 30px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-container {
+                padding: 15px 20px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .logo {
+                font-size: 20px;
+            }
+        }
+
+        /* OVERLAY */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .projects-container {
+            max-width: 1200px;
+            margin: 120px auto 50px;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .page-title span {
+            color: #00ffcc;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(0, 255, 204, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 255, 204, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+
+        .project-info {
+            padding: 25px;
+            background: rgba(1, 1, 30, 0.3);
+        }
+
+        .project-info h3 {
+            color: #00ffcc;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .project-info p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .project-tag {
+            background: rgba(0, 255, 204, 0.1);
+            color: #00ffcc;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            border: 1px solid rgba(0, 255, 204, 0.3);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .project-btn {
+            padding: 8px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .project-btn:not(.secondary) {
+            background: #00ffcc;
+            color: rgba(1, 1, 30, 1);
+        }
+
+        .project-btn.secondary {
+            border: 2px solid #00ffcc;
+            color: #00ffcc;
+        }
+
+        .project-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 204, 0.2);
+        }
+
+        .project-btn i {
+            font-size: 1.1em;
+        }
+
+        .explore-more {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .explore-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 30px;
+            background: rgba(0, 255, 204, 0.1);
+            color: #00ffcc;
+            border: 2px solid #00ffcc;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .explore-btn:hover {
+            background: #00ffcc;
+            color: rgba(1, 1, 30, 1);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 204, 0.3);
+        }
+
+        .explore-btn i {
+            font-size: 1.2em;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 15px rgba(0, 255, 204, 0.5); }
+            50% { box-shadow: 0 0 25px rgba(0, 255, 204, 0.8); }
+            100% { box-shadow: 0 0 15px rgba(0, 255, 204, 0.5); }
+        }
+
+        .footer {
+            background: rgba(1, 1, 30, 0.95);
+            padding: 60px 0 0;
+            color: #fff;
+            border-top: 1px solid rgba(0, 255, 204, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-about h3,
+        .footer-links h3,
+        .footer-contact h3 {
+            color: #00ffcc;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-about h3::after,
+        .footer-links h3::after,
+        .footer-contact h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: #00ffcc;
+        }
+
+        .footer-about p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            color: #00ffcc;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 255, 204, 0.2);
+        }
+
+        .social-links a:hover {
+            background: #00ffcc;
+            color: #01011e;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 204, 0.3);
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links a i {
+            color: #00ffcc;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #00ffcc;
+            padding-left: 5px;
+        }
+
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-contact i {
+            color: #00ffcc;
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 25px 0;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-about,
+            .footer-links,
+            .footer-contact {
+                text-align: center;
+            }
+
+            .footer-about h3::after,
+            .footer-links h3::after,
+            .footer-contact h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+
+            .footer-links ul {
+                display: inline-block;
+                text-align: left;
+            }
+
+            .footer-contact p {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="header">
+        <div class="nav-container">
+            <div class="logo">PORT<span>FOLIO</span></div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html#home" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+                <li class="nav-item"><a href="index.html#about" class="nav-link"><i class="fas fa-user"></i> About</a></li>
+                <li class="nav-item"><a href="index.html#skills" class="nav-link"><i class="fas fa-code"></i> Skills</a></li>
+                <li class="nav-item"><a href="projects.html" class="nav-link"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                <li class="nav-item"><a href="index.html#contact" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+            <button class="hamburger" aria-label="Toggle sidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <button class="sidebar-close" aria-label="Close sidebar">
+            <i class="fas fa-times"></i>
+        </button>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item"><a href="index.html#home" class="sidebar-link"><i class="fas fa-home"></i> Home</a></li>
+            <li class="sidebar-item"><a href="index.html#about" class="sidebar-link"><i class="fas fa-user"></i> About</a></li>
+            <li class="sidebar-item"><a href="index.html#skills" class="sidebar-link"><i class="fas fa-code"></i> Skills</a></li>
+            <li class="sidebar-item"><a href="projects.html" class="sidebar-link"><i class="fas fa-project-diagram"></i> Projects</a></li>
+            <li class="sidebar-item"><a href="index.html#contact" class="sidebar-link"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+    </div>
+
+    <div class="projects-container">
+        <h1 class="page-title">Web<span> Development</span></h1>
+        
+        <div class="projects-grid">
+            <!-- Project cards will be added here -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/DTSA.PNG" alt="Project 1">
+                </div>
+                <div class="project-info">
+                    <h3>D.T.S.A</h3>
+                    <p>Delhi Taekwondo Sports Academy (D.T.S.A) is a premier martial arts training center focused on professional Taekwondo coaching, self-defense, and fitness development. This project showcases my expertise in website design, user-friendly UI/UX, and seamless backend functionality to create a dynamic and engaging online presence for the academy</p>
+                    <div class="project-tags">
+                        <span class="project-tag">HTML</span>
+                        <span class="project-tag">CSS</span>
+                        <span class="project-tag">JavaScript</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://deshwalarjun24.github.io/D.T.S.A/" class="project-btn">
+                            <i class="fas fa-external-link-alt"></i> View Live
+                        </a>
+                        <a href="https://github.com/deshwalarjun24/D.T.S.A" class="project-btn secondary">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/SSD.PNG" alt="Project 1">
+                </div>
+                <div class="project-info">
+                    <h3>S.S.D</h3>
+                    <p>A modern and user-friendly website designed for SSD School, ensuring seamless interaction between students, teachers, and administrators. The platform features an intuitive interface</p>
+                    <div class="project-tags">
+                        <span class="project-tag">HTML</span>
+                        <span class="project-tag">CSS</span>
+                        <span class="project-tag">JavaScript</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://deshwalarjun24.github.io/S.S.D/" class="project-btn">
+                            <i class="fas fa-external-link-alt"></i> View Live
+                        </a>
+                        <a href="https://github.com/deshwalarjun24/S.S.D" class="project-btn secondary">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/EduSync.PNG" alt="Project 1">
+                </div>
+                <div class="project-info">
+                    <h3>EduSync</h3>
+                    <p>EduSync is an innovative and fully responsive educational web platform designed to streamline the communication and workflow between teachers, students, and institutions. Built with a clean UI/UX and robust backend, EduSync allows seamless assignment submission, notes sharing, attendance tracking using QR codes, and academic performance monitoring.
+
+                        This project showcases a complete educational ecosystem with role-based login (Student/Teacher), secure authentication, and real-time academic interaction.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">HTML</span>
+                        <span class="project-tag">CSS</span>
+                        <span class="project-tag">JavaScript</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://deshwalarjun24.github.io/EduSync/" class="project-btn">
+                            <i class="fas fa-external-link-alt"></i> View Live
+                        </a>
+                        <a href="https://github.com/deshwalarjun24/EduSync" class="project-btn secondary">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/Portfolio2.PNG" alt="Project 1">
+                </div>
+                <div class="project-info">
+                    <h3>Game Developer Portfolio </h3>
+                    <p>This is a custom-built, gaming-themed portfolio website designed specifically for showcasing the skills, projects, and personality of a Game Developer. The UI/UX is inspired by futuristic game menus, dark-mode aesthetics, and glitchy animations — giving visitors the feeling of entering a real game world.
+
+                        From hover effects to custom cursors, every visual element reflects the core spirit of gaming.
+
+                        This project showcases a complete educational ecosystem with role-based login (Student/Teacher), secure authentication, and real-time academic interaction.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">HTML</span>
+                        <span class="project-tag">CSS</span>
+                        <span class="project-tag">JavaScript</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://deshwalarjun24.github.io/Portfolio2/" class="project-btn">
+                            <i class="fas fa-external-link-alt"></i> View Live
+                        </a>
+                        <a href="https://github.com/deshwalarjun24/Portfolio2" class="project-btn secondary">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/WEBLIX.PNG" alt="Project 1">
+                </div>
+                <div class="project-info">
+                    <h3>WEBLIX </h3>
+                    <p>Weblix is my personal freelance web development brand, crafted to deliver high-quality, custom web solutions to businesses and individuals. From concept to deployment, Weblix focuses on building visually striking, fully responsive, and performance-optimized websites tailored to each client's needs.
+
+                        The website reflects a modern tech agency vibe, showcasing my skills in design, interactivity, and branding. It features a sleek UI with smooth transitions, a well-structured portfolio gallery, and a contact system for client collaboration.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">HTML</span>
+                        <span class="project-tag">CSS</span>
+                        <span class="project-tag">JavaScript</span>
+                        <span class="project-tag">React.js</span>
+                        <span class="project-tag">PHP</span>
+                        <span class="project-tag">MYSQL</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://deshwalarjun24.github.io/Weblix/" class="project-btn">
+                            <i class="fas fa-external-link-alt"></i> View Live
+                        </a>
+                        <a href="https://github.com/deshwalarjun24/Weblix" class="project-btn secondary">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/Insights.PNG" alt="Project 1">
+                </div>
+                <div class="project-info">
+                    <h3>Insights</h3>
+                    <p>Insights is a sleek and distraction-free blogging website built for readers and writers who value clarity, speed, and simplicity. Designed with a minimalist approach, this platform puts content at the center — offering a smooth reading experience with elegant typography, light-dark theme support, and SEO-optimized structure.
+
+                        Whether it's tech articles, personal reflections, or professional blogs — Insights gives creators the perfect canvas to express their thoughts.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">HTML</span>
+                        <span class="project-tag">CSS</span>
+                        <span class="project-tag">JavaScript</span>
+                        
+                        <span class="project-tag">PHP</span>
+                        <span class="project-tag">MYSQL</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://deshwalarjun24.github.io/Insights/" class="project-btn">
+                            <i class="fas fa-external-link-alt"></i> View Live
+                        </a>
+                        <a href="https://github.com/deshwalarjun24/Insights" class="project-btn secondary">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/Login.PNG" alt="Project 1">
+                </div>
+                <div class="project-info">
+                    <h3>GrandWardrobe</h3>
+                    <p>Clothing E-Commerce Website
+                        Created a demo e-commerce website for a clothing brand featuring product listings, category filters, shopping cart, and checkout system. Designed a responsive and user-friendly interface to provide a smooth browsing and shopping experience.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">HTML</span>
+                        <span class="project-tag">CSS</span>
+                        <span class="project-tag">JavaScript</span>
+                        
+                      
+                    </div>
+                    <div class="project-links">
+                        <a href="https://grandwardrobe.vercel.app/" class="project-btn">
+                            <i class="fas fa-external-link-alt"></i> View Live
+                        </a>
+                        <a href="https://github.com/deshwalarjun24/grandwardrobe" class="project-btn secondary">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/Portfolio.PNG" alt="Project 1">
+                </div>
+                <div class="project-info">
+                    <h3>My Portfolio</h3>
+                    <p>This is my official portfolio website — a digital identity that showcases my work as a Full Stack Developer, Game Designer, and UI/UX Specialist. Designed with a clean and modern aesthetic, the portfolio reflects both my technical expertise and creative mindset, offering visitors an immersive experience into my professional journey.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">HTML</span>
+                        <span class="project-tag">CSS</span>
+                        <span class="project-tag">JavaScript</span>
+                        
+                      
+                    </div>
+                    <div class="project-links">
+                        <a href="https://deshwalarjun24.github.io/Portfolio/" class="project-btn">
+                            <i class="fas fa-external-link-alt"></i> View Live
+                        </a>
+                        <a href="https://github.com/deshwalarjun24/Portfolio" class="project-btn secondary">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/Artist.PNG" alt="Project 1">
+                </div>
+                <div class="project-info">
+                    <h3>Artistry</h3>
+                    <p>Designed and developed a demo e-commerce website showcasing clothing products with an artistic and visually appealing layout. Built responsive pages with product galleries, filters, and a smooth checkout flow to demonstrate both creativity and functionality in web design.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">HTML</span>
+                        <span class="project-tag">CSS</span>
+                        <span class="project-tag">JavaScript</span>
+                        
+                      
+                    </div>
+                    <div class="project-links">
+                        <a href="https://artist-mloa.vercel.app/" class="project-btn">
+                            <i class="fas fa-external-link-alt"></i> View Live
+                        </a>
+                        <a href="https://github.com/deshwalarjun24/Artist" class="project-btn secondary">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/FunVilla.PNG" alt="Project 1">
+                </div>
+                <div class="project-info">
+                    <h3>FunVilla</h3>
+                    <p>FunVilla is an exciting and interactive Kid Play Zone designed to provide a safe, fun, and engaging environment for children. This project showcases my expertise in UI/UX design, frontend development</p>
+                    <div class="project-tags">
+                        <span class="project-tag">HTML</span>
+                        <span class="project-tag">CSS</span>
+                        <span class="project-tag">JavaScript</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://deshwalarjun24.github.io/FunVilla/" class="project-btn">
+                            <i class="fas fa-external-link-alt"></i> View Live
+                        </a>
+                        <a href="https://github.com/deshwalarjun24/FunVilla" class="project-btn secondary">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      
+    </div>
+
+
+
+    <div class="projects-container">
+        <h1 class="page-title">FIGMA <span>/
+            CANVAS</span></h1>
+        
+        <div class="projects-grid">
+            <!-- Project cards will be added here -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/Converse.jpg" alt="Project 1">
+                </div>
+                <div class="project-info">
+                    <h3>CONVERSE Design</h3>
+                    <p>A 3D Visuals Design Making for a Advertisment of CONVERSE </p>
+                    <div class="project-tags">
+                        <span class="project-tag">FIGMA</span>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/DeepSea.PNG" alt="Project 1">
+                </div>
+                <div class="project-info">
+                    <h3>OCEAN Design</h3>
+                    <p>This project brings the underwater world to life through a fully immersive 3D animated ocean experience built for the web. Designed to educate and engage users about marine biodiversity, the website combines stunning visuals, smooth animation, and intuitive navigation to simulate a deep-sea journey.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">FIGMA</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://rp9qbjxc76.preview.dora.run/?page=PO4Fm7K6s4Y&project=2165298&device=Desktop&high-performance=true" class="project-btn">
+                            <i class="fas fa-external-link-alt"></i> View Live
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canva Design 1 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/Canva/1.png" alt="Canva Design 1">
+                </div>
+                <div class="project-info">
+                    <h3>Canva Design 1</h3>
+                    <p>A creative design showcasing modern aesthetics and visual appeal, created using Canva's powerful design tools.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">CANVA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canva Design 2 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/Canva/2.png" alt="Canva Design 2">
+                </div>
+                <div class="project-info">
+                    <h3>Canva Design 2</h3>
+                    <p>An elegant design demonstrating layout and typography skills, crafted with Canva's intuitive design platform.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">CANVA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canva Design 3 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/Canva/3.png" alt="Canva Design 3">
+                </div>
+                <div class="project-info">
+                    <h3>Canva Design 3</h3>
+                    <p>A vibrant and engaging design highlighting creative use of colors and visual elements in Canva.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">CANVA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canva Design 4 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/Canva/4.png" alt="Canva Design 4">
+                </div>
+                <div class="project-info">
+                    <h3>Canva Design 4</h3>
+                    <p>A professional design showcasing layout composition and visual hierarchy using Canva's design tools.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">CANVA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canva Design 5 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/Canva/5.png" alt="Canva Design 5">
+                </div>
+                <div class="project-info">
+                    <h3>Canva Design 5</h3>
+                    <p>An innovative design demonstrating creative use of Canva's templates and design elements.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">CANVA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canva Design 6 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/Canva/6.png" alt="Canva Design 6">
+                </div>
+                <div class="project-info">
+                    <h3>Canva Design 6</h3>
+                    <p>A modern and clean design showcasing professional graphic design skills using Canva.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">CANVA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canva Design 7 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/Canva/7.png" alt="Canva Design 7">
+                </div>
+                <div class="project-info">
+                    <h3>Canva Design 7</h3>
+                    <p>An innovative design demonstrating creative layout and visual storytelling with Canva's design tools.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">CANVA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canva Design 8 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="assets/projects/Canva/8.png" alt="Canva Design 8">
+                </div>
+                <div class="project-info">
+                    <h3>Canva Design 8</h3>
+                    <p>A professional and engaging design showcasing advanced Canva techniques and visual communication.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">CANVA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-about">
+                <h3>Arjun Singh</h3>
+                <p>Game Developer & Digital Marketing Specialist creating immersive experiences and impactful digital strategies.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="projects.html"><i class="fas fa-chevron-right"></i> Projects</a></li>
+                    <li><a href="index.html#about"><i class="fas fa-chevron-right"></i> About</a></li>
+                    <li><a href="index.html#skills"><i class="fas fa-chevron-right"></i> Skills</a></li>
+                    <li><a href="index.html#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-contact">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Delhi, India</p>
+                <p><i class="fas fa-envelope"></i>deshwalarjun24@gmail.com</p>
+                <p><i class="fas fa-phone"></i> +91 9711014860</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Arjun Singh. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <video id="background-video" autoplay loop muted>
+        <source src="assets/Space.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <!-- Add Lottie Character -->
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+    <div class="character" style="position: fixed; z-index: 9999; display: block; visibility: visible; opacity: 1; cursor: pointer; transition: transform 0.5s ease;">
+        <dotlottie-player 
+            src="https://lottie.host/36f5ae0c-4549-47bc-ba46-5bbab4d7c4c0/O8IuSe62CL.lottie" 
+            background="transparent" 
+            speed="0.3" 
+            style="width: 150px; height: 150px; mix-blend-mode: lighten;" 
+            loop autoplay id="character">        
+        </dotlottie-player>
+        <div class="speech-bubble" style="display: none; position: absolute; background: rgba(1, 1, 30, 0.8); border: 2px solid #00ffcc; border-radius: 15px; padding: 15px; top: -60px; left: 50%; transform: translateX(-50%); color: white; font-size: 16px; backdrop-filter: blur(10px); box-shadow: 0 0 15px rgba(0, 255, 204, 0.5); min-width: 150px; text-align: center; transition: all 0.3s ease; opacity: 0; animation: pulse 2s infinite;">
+            <span style="font-weight: bold; color: #00ffcc;">Hi there!</span>
+            <div style="margin-top: 5px;">Welcome to my projects!</div>
+            <div style="border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 15px solid #00ffcc; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%);"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Character Random Movement
+        const characterElement = document.querySelector('.character');
+        let posX = 20;
+        let posY = window.innerHeight - 170;
+        let destX = posX;
+        let destY = posY;
+        let moveSpeed = 0.03;
+        let isMoving = true;
+
+        function getRandomPos() {
+            const maxX = window.innerWidth - 150;
+            const maxY = window.innerHeight - 150;
+            const minY = 100;
+            return {
+                x: Math.random() * maxX,
+                y: Math.random() * (maxY - minY) + minY
+            };
+        }
+
+        function moveCharacter() {
+            if (isMoving) {
+                // Change destination randomly
+                if (Math.random() < 0.008) {
+                    const newPos = getRandomPos();
+                    destX = newPos.x;
+                    destY = newPos.y;
+                }
+
+                // Move smoothly toward destination
+                posX += (destX - posX) * moveSpeed;
+                posY += (destY - posY) * moveSpeed;
+
+                // Update position
+                characterElement.style.left = posX + 'px';
+                characterElement.style.top = posY + 'px';
+            }
+            requestAnimationFrame(moveCharacter);
+        }
+
+        // Speech bubble messages
+        const messages = [
+            "Check out my projects!",
+            "Welcome to my portfolio!",
+            "Like what you see?",
+            "Feel free to contact me!",
+            "Explore my work!",
+            "Hi there! I'm Arjun!",
+            "Thanks for visiting!",
+            "Let's work together!"
+        ];
+
+        // Show speech bubble on hover/click
+        characterElement.addEventListener('click', () => {
+            const speechBubble = characterElement.querySelector('.speech-bubble');
+            
+            // Get random message
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            const messageSpan = speechBubble.querySelector('span');
+            messageSpan.textContent = randomMessage;
+            
+            // Show with animation
+            speechBubble.style.display = 'block';
+            speechBubble.style.opacity = '0';
+            
+            setTimeout(() => {
+                speechBubble.style.opacity = '1';
+            }, 50);
+            
+            // Hide after delay
+            setTimeout(() => {
+                speechBubble.style.opacity = '0';
+                setTimeout(() => {
+                    speechBubble.style.display = 'none';
+                }, 500);
+            }, 3000);
+            
+            // Pause movement briefly when clicked
+            isMoving = false;
+            setTimeout(() => {
+                isMoving = true;
+            }, 2000);
+        });
+
+        // Start animation when page loads
+        window.addEventListener('load', () => {
+            const startPos = getRandomPos();
+            posX = startPos.x;
+            posY = startPos.y;
+            destX = posX;
+            destY = posY;
+            characterElement.style.left = posX + 'px';
+            characterElement.style.top = posY + 'px';
+            moveCharacter();
+        });
+
+        // Sidebar toggle
+        const hamburger = document.querySelector('.hamburger');
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarClose = document.querySelector('.sidebar-close');
+        
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        // Close sidebar when clicking the close button
+        sidebarClose.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+        });
+
+        // Close sidebar when clicking outside
+        document.addEventListener('click', (e) => {
+            if (sidebar.classList.contains('active') && 
+                !sidebar.contains(e.target) && 
+                !hamburger.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html> 
